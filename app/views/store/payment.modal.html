@@ -1,0 +1,212 @@
+<div class="inmodal">
+  <div class="modal-header">
+    <h4 class="modal-title">Forma de Pago</h4>
+  </div>
+  <div class="modal-body">
+
+    <!-- OPTIONS -->
+    <div ng-hide="vm.transfer || vm.creditCard">
+      <div class="form-group">
+        <button type="button" class="btn btn-primary pay-btn" ng-click="vm.paypal()">
+          <i class="fa fa-paypal" aria-hidden="true"></i> PayPal
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button type="button" class="btn btn-primary-b pay-btn" ng-click="vm.chooseCC()">
+          <i class="fa fa-credit-card" aria-hidden="true"></i> Crédito o Débito
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button type="button" class="btn btn-primary pay-btn" ng-click="vm.transfer = true">
+          <i class="fa fa-money" aria-hidden="true"></i> Depósito o Transferencia
+        </button>
+      </div>
+    </div>
+
+    <!-- CREDIT CARD -->
+    <div ng-show="vm.creditCard">
+
+      <p style="background:url(https://maf.pagosonline.net/ws/fp?id=${deviceSessionId}usuarioId)"></p>
+
+      <img src="https://maf.pagosonline.net/ws/fp/clear.png?id=${deviceSessionId}usuarioId">
+
+      <script src="https://maf.pagosonline.net/ws/fp/check.js?id=${deviceSessionId}usuarioId"></script>
+
+      <object type="application/x-shockwave-flash"
+
+              data="https://maf.pagosonline.net/ws/fp/fp.swf?id=${deviceSessionId}usuarioId" width="1" height="1"
+
+              id="thm_fp">
+
+        <param name="movie" value="https://maf.pagosonline.net/ws/fp/fp.swf?id=${deviceSessionId}usuarioId" />
+
+      </object>
+
+      <form role="form" name="buyForm" novalidate ng-submit="vm.conekta()" id="card-form">
+  
+        <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.street1.$dirty)) && buyForm.street1.$invalid ? 'has-error' : ''">
+          <label>Dirección 1</label>
+          <input type="text" class="form-control" name="street1" ng-model="vm.buy.card.adress.street1" required maxlength="100">
+          <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.street1.$dirty)) && buyForm.street1.$invalid">
+            <small class="text-danger" ng-show="buyForm.street1.$error.required">Ingrese la dirección</small>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.street2.$dirty)) && buyForm.street2.$invalid ? 'has-error' : ''">
+          <label>Dirección 2</label>
+          <input type="text" class="form-control" name="street2" ng-model="vm.buy.card.adress.street2" required maxlength="100">
+          <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.street2.$dirty)) && buyForm.street2.$invalid">
+            <small class="text-danger" ng-show="buyForm.street2.$error.required">Ingrese la dirección</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.postalCode.$dirty)) && buyForm.postalCode.$invalid ? 'has-error' : ''">
+              <label>Código Postal</label>
+              <input type="text" class="form-control" name="postalCode" ng-model="vm.buy.card.adress.zip" required maxlength="8" onlydigits>
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.postalCode.$dirty)) && buyForm.postalCode.$invalid">
+                <small class="text-danger" ng-show="buyForm.postalCode.$error.required">Ingrese el código postal</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.city.$dirty)) && buyForm.city.$invalid ? 'has-error' : ''">
+              <label>Ciudad</label>
+              <input type="text" class="form-control" name="city" ng-model="vm.buy.card.adress.city" required maxlength="50">
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.city.$dirty)) && buyForm.city.$invalid">
+                <small class="text-danger" ng-show="buyForm.city.$error.required">Ingrese la ciudad</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.state.$dirty)) && buyForm.state.$invalid ? 'has-error' : ''">
+              <label>Estado</label>
+              <input type="text" class="form-control" name="state" ng-model="vm.buy.card.adress.state" required maxlength="100">
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.state.$dirty)) && buyForm.state.$invalid">
+                <small class="text-danger" ng-show="buyForm.state.$error.required">Ingrese el estado</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.country.$dirty)) && buyForm.country.$invalid ? 'has-error' : ''">
+              <label>País</label>
+              <input type="text" class="form-control" name="country" ng-model="vm.buy.card.adress.country" required maxlength="100">
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.country.$dirty)) && buyForm.country.$invalid">
+                <small class="text-danger" ng-show="buyForm.country.$error.required">Ingrese el país</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardName.$dirty)) && buyForm.creditCardName.$invalid ? 'has-error' : ''">
+          <label>Nombre (Tal como aparece en la tarjeta)</label>
+          <input type="text" class="form-control" name="creditCardName" ng-model="vm.buy.card.name" required maxlength="255">
+          <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardName.$dirty)) && buyForm.creditCardName.$invalid">
+            <small class="text-danger" ng-show="buyForm.creditCardName.$error.required">Ingrese el nombre en la tarjeta</small>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardNumber.$dirty)) && buyForm.creditCardNumber.$invalid ? 'has-error' : ''">
+          <label>Número</label>
+          <input type="text" class="form-control" name="creditCardNumber" ng-model="vm.buy.card.number" required ng-minlength="13" maxlength="20" onlydigits>
+          <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardNumber.$dirty)) && buyForm.creditCardNumber.$invalid">
+            <small class="text-danger" ng-show="buyForm.creditCardNumber.$error.required">Ingrese el número de la tarjeta</small>
+            <small class="text-danger" ng-show="buyForm.creditCardNumber.$error.minlength">Ingrese al menos 13 dígitos</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group" ng-class="(buyForm.$submitted ||
+                (buyForm.$dirty && (buyForm.creditCardExpirationMonth.$dirty || buyForm.creditCardExpirationYear.$dirty))) &&
+                (buyForm.creditCardExpirationMonth.$invalid || buyForm.creditCardExpirationYear.$invalid) ? 'has-error' : ''">
+              <label>Fecha de expiración (MM/AAAA)</label><br>
+              <input type="text" class="form-control exp-date-month" name="creditCardExpirationMonth" ng-model="vm.buy.card.exp_month" placeholder="MM" required ng-minlength="2" maxlength="2" onlydigits>
+              <span>/</span>
+              <input type="text" class="form-control exp-date-year" name="creditCardExpirationYear" ng-model="vm.buy.card.exp_year" placeholder="AAAA" required ng-minlength="4" maxlength="4" onlydigits>
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardExpirationMonth.$dirty)) && buyForm.creditCardExpirationMonth.$invalid">
+                <small class="text-danger" ng-show="buyForm.creditCardExpirationMonth.$error.required">Ingrese el mes MM</small>
+                <small class="text-danger" ng-show="buyForm.creditCardExpirationMonth.$error.minlength">Ingrese el mes MM</small>
+              </div>
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardExpirationYear.$dirty)) && buyForm.creditCardExpirationYear.$invalid">
+                <small class="text-danger" ng-show="buyForm.creditCardExpirationYear.$error.required">Ingrese el año AAAA</small>
+                <small class="text-danger" ng-show="buyForm.creditCardExpirationYear.$error.minlength">Ingrese el año AAAA</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group" ng-class="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardSecurityCode.$dirty)) && buyForm.creditCardSecurityCode.$invalid ? 'has-error' : ''">
+              <label>Código de Seguridad</label>
+              <input type="password" class="form-control" name="creditCardSecurityCode" ng-model="vm.buy.card.cvc" required ng-minlength="3" maxlength="4" onlydigits>
+              <div class="m-t-xs" ng-show="(buyForm.$submitted || (buyForm.$dirty && buyForm.creditCardSecurityCode.$dirty)) && buyForm.creditCardSecurityCode.$invalid">
+                <small class="text-danger" ng-show="buyForm.creditCardSecurityCode.$error.required">Ingrese el número de la tarjeta</small>
+                <small class="text-danger" ng-show="buyForm.creditCardSecurityCode.$error.minlength">Ingrese al menos 3 dígitos</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" ng-click="vm.creditCard = false">Regresar</button>
+          <button class="btn btn-sm btn-primary" type="submit"><strong>Confirmar Pago</strong>
+          </button>
+        </div>
+        
+      </form> 
+    </div>
+
+    <!-- TRANSFER -->
+    <div ng-show="vm.transfer">
+      <div class="form-group">
+        <button type="button" class="btn btn-primary pay-btn" ng-click="vm.transfer = false">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
+        </button>
+      </div>
+      <br>
+      <p>
+        Para un depósito en caja (puedes utilizar tarjeta de débito o crédito) simplemente acude a pagar y en el
+        transcurso de un máximo de 12 horas el pago se verá reflejado en en tu cuenta.
+      </p>
+      <p>
+        Para realizar una transferencia bancaria aquí mismo te anexamos los datos:<br>
+        Beneficiario: <b>CORPORATIVO MEDICO DENTAL GILBERT</b><br>
+        Banco: <b>Bancomer</b><br>
+        No. Cuenta: <b>0197669526</b><br>
+        Cuenta CLABE: <b>012180001976695265</b>
+      </p>
+      <p>
+        <span class="text-error">IMPORTANTE: </span> Escribir dentro de REFERENCIA/CONCEPTO tu nombre y enviar al correo:
+        <a href="mailto:jacobo@torremedicametropolitana.com.mx">jacobo@torremedicametropolitana.com.mx</a> el comprobante del depósito.<br>
+        Una vez realizado en un máximo de 12 horas el pago se verá reflejado en tu cuenta.
+      </p>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-white" ng-click="vm.cancel()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary-b" ng-click="vm.transferPayment()" ng-show="vm.transfer">
+      Aceptar
+    </button>
+  </div>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

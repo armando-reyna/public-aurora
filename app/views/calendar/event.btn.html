@@ -1,0 +1,15 @@
+<button class="btn event {{event.class}}"
+        ng-class="{'btn-primary' : user.role.id == CONSTANTS.ROLES.SUPER_ADMIN
+        || user.role.id == CONSTANTS.ROLES.BRANCH_ADMIN
+        || user.role.id == CONSTANTS.ROLES.SELLS
+        || user.role.id == CONSTANTS.ROLES.CLIENT && event.user.id == user.id,
+        'btn-c' : user.role.id == CONSTANTS.ROLES.CLIENT && event.user.id != user.id}"
+        ng-mouseover="hover = true"
+        ng-mouseleave="hover = false" ng-click="ngClick(event)">
+  <span ng-hide="hover" ng-if="user.role.id == CONSTANTS.ROLES.SUPER_ADMIN || user.role.id == CONSTANTS.ROLES.BRANCH_ADMIN || user.role.id == CONSTANTS.ROLES.SELLS">
+    <span ng-hide="view == CONSTANTS.CALENDAR_TYPE_BY_HR">{{ event.formattedStartHour }} - </span>{{ event.user.name }}
+  </span>
+  <span ng-hide="hover" ng-if="user.role.id == CONSTANTS.ROLES.CLIENT && event.user.id == user.id">{{ event.title }}</span>
+  <span ng-if="user.role.id == CONSTANTS.ROLES.CLIENT && event.user.id != user.id">Ocupado</span>
+  <span ng-show="hover && !(user.role.id == CONSTANTS.ROLES.CLIENT && event.user.id != user.id)"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</span>
+</button>

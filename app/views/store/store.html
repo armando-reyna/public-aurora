@@ -1,0 +1,71 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Membres&iacute;as</h2>
+    <br>
+    <h3>Las horas tienen una validez de 30 d&iacute;as h&aacute;biles
+      desde el momento en el que las horas son emitidas</h3>
+  </div>
+  <div class="col-lg-2"></div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-md-2" ng-repeat="membership in vm.memberships track by $index">
+      <div class="ibox">
+        <div class="ibox-content product-box">
+          <div class="product-imitation" style="padding: 0;">
+            <img alt="bronce" ng-src="{{CONSTANTS.API_URI}}/membership/view-file?membershipId={{membership.id}}">
+          </div>
+          <div class="product-desc">
+            {{membership.price | currency}}
+            <span class="product-name">
+							<i class="fa" aria-hidden="true" ng-class="{'fa-plus' : membership.type == 'MEMBERSHIP',
+																													'fa-arrow-up' : membership.type == 'UPGRADE',
+																													'fa-arrow-down' : membership.type == 'DOWNGRADE',
+																													'fa-refresh' : membership.type == 'RENOVATE',
+																													'fa-clock-o' : membership.type == 'EXTRA_HOUR'}"></i>
+							{{membership.name}}
+						</span>
+            <div class="small m-t-xs" ng-show="membership.type != 'EXTRA_HOUR'">
+              <span ng-show="membership.hours < 999">{{membership.hours}} horas mensuales</span>
+              <span ng-hide="membership.hours < 999" class="primary-color"><strong>Horas Ilimitadas</strong></span>
+            </div>
+            <div class="small m-t-xs" ng-show="membership.type != 'EXTRA_HOUR'">
+              <button class="btn btn-primary" ng-click="vm.openPaymentModal(membership)">Pagar</button>
+            </div>
+            <div ng-show="membership.type == 'EXTRA_HOUR'">
+              <div class="small m-t-xs">
+                <div class="input-group input-group-number">
+                  <span class="clickable input-group-addon" ng-click="vm.addHr()">
+										<i class="fa fa-arrow-up"></i>
+									</span>
+                  <input type="text" class="form-control" id="extraHrs" name="extraHrs" ng-model="vm.extraHrs" readonly required>
+                  <span class="clickable input-group-addon" ng-click="vm.subsHr()">
+										<i class="fa fa-arrow-down"></i>
+									</span>
+                </div>
+              </div>
+              <div class="small m-t-xs">
+                <button class="btn btn-primary" ng-click="vm.openPaymentModal(membership)" ng-disabled="!vm.extraHrs">
+                  Pagar
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

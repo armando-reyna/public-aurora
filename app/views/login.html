@@ -1,0 +1,34 @@
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+  <div>
+    <div>
+      <img src="img/logo.png">
+    </div>
+    <h3>Sistema de Reservas</h3>
+    <form class="m-t" role="form" name="vm.loginForm" novalidate>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username" name="user" ng-model="vm.user.user" ng-required="true">
+        <div class="m-t-xs" ng-show="vm.loginForm.password.$dirty && vm.loginForm.user.$invalid">
+          <small class="text-danger" ng-show="vm.loginForm.user.$error.required">Ingrese un usuario.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" name="password" ng-model="vm.user.password" ng-required="true">
+        <div class="m-t-xs" ng-show="vm.loginForm.password.$dirty && vm.loginForm.password.$invalid">
+          <small class="text-danger" ng-show="vm.loginForm.password.$error.required">Ingrese una contraseña.</small>
+        </div>
+      </div>
+      <div class="m-t-xs" ng-show="vm.loginError">
+        <small class="text-danger">{{vm.loginMessage}}</small>
+      </div>
+      <button class="btn btn-primary block full-width m-b" ng-click="vm.loginAction()">Login</button>
+
+      <a ng-click="vm.showRememberPassword()">
+        <small>¿Olvidaste tu contraseña?</small>
+      </a>
+
+    </form>
+    <p class="m-t">
+      <div ng-include="'views/common/footer.html'"></div>
+    </p>
+  </div>
+</div>

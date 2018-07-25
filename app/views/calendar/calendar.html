@@ -1,0 +1,113 @@
+<div class="btn-bar">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="btn-group">
+          <span class="btn btn-white" ng-model="vm.calendarView" uib-btn-radio="'Week'"
+                ng-click="changeView(CONSTANTS.CALENDAR_TYPE_BY_HR)">
+            <i class="fa fa-list" aria-hidden="true"></i> Agenda Semanal
+          </span>
+        <span class="btn btn-white" ng-model="vm.calendarView" uib-btn-radio="'Month'"
+              ng-click="changeView(CONSTANTS.CALENDAR_TYPE_BY_DAY)">
+            <i class="fa fa-calendar" aria-hidden="true"></i> Agenda Mensual
+          </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ibox-content">
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h2 class="text-capitalize">{{currentDate.format('MMMM YYYY')}}</h2>
+    </div>
+    <div class="col-lg-6">
+      <div class="pull-right">
+        <button class="btn btn-default" ng-click="setToday()">Hoy</button>
+        <button class="btn btn-default" ng-click="prev()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i> Anterior
+        </button>
+        <button class="btn btn-default" ng-click="next()">
+          Siguiente <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+
+      <table class="calendar-table" ng-if="calendarView == CONSTANTS.CALENDAR_TYPE_BY_DAY">
+        <thead>
+        <tr>
+          <th>Domingo</th>
+          <th>Lunes</th>
+          <th>Martes</th>
+          <th>Miércoles</th>
+          <th>Jueves</th>
+          <th>Viernes</th>
+          <th>Sábado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="week in weeks">
+          <td ng-repeat="day in week.days" ng-class="{'today' : day.today}">
+            <div class="day-no pull-left" ng-if="day.today"><strong>HOY</strong></div>
+            <div class="day-no pull-right">{{day.no}}</div>
+            <div class="event-container" ng-if="day.date">
+              <event event="event" view="calendarView" ng-repeat="event in day.events" ng-click="cancel"></event>
+              <button class="btn btn-primary-b event-add" ng-if="by == CONSTANTS.CALENDAR_BY_CUBICLE && day.enableAdd"
+                      ng-click="reserve(day.date)">
+                <i class="fa fa-plus" aria-hidden="true"></i><br/>
+                Agendar Cita
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <table class="calendar-table-b" ng-if="calendarView == CONSTANTS.CALENDAR_TYPE_BY_HR">
+        <thead>
+        <tr>
+          <th class="td-hr">Hora</th>
+          <th class="td-day text-capitalize" ng-repeat="day in days">
+            {{day.format('dddd DD')}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="hour in hours">
+          <td ng-class="{'now': hour.hover}">{{hour.hour | formatHr}}</td>
+          <td ng-repeat="day in hour.days"
+              ng-mouseover="day.hover = true; hour.hover = true;"
+              ng-mouseleave="day.hover = false; hour.hover = false;" ng-class="{'today': day.today}">
+            <div class="td-hour">
+              <event ng-if="day.event" event="day.event" view="calendarView" ng-click="cancel"></event>
+              <button class="btn btn-primary-b event-add" ng-if="by == CONSTANTS.CALENDAR_BY_CUBICLE && day.hover && !day.event"
+                      ng-click="reserve(day.date, hour.hour)">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Agendar Cita
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<div class="busy" ng-show="loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

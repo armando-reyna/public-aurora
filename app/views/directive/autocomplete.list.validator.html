@@ -1,0 +1,30 @@
+<div class="form-group" ng-class="(form.forceValidation || form.$submitted || (form.$dirty && formModel.$dirty)) && formModel.$invalid ? 'has-error' : ''">
+  <label>{{label}} <strong class="red" ng-if="required">*</strong></label>
+
+  <angucomplete
+                placeholder="{{placeholder}}"
+                pause="100"
+                selectedobject="selectedAutocomplete"
+                localdata="list"
+                searchfields="{{autocomplete}}"
+                titlefield="{{autocomplete}}"
+                minlength="1"
+                inputclass="form-control form-control-small"/>
+
+  <input type="hidden" name="{{inputName}}" ng-model="model" ng-required="required">
+
+  <div class="spacer-sm" ng-show="model"></div>
+
+  <ul>
+    <li ng-repeat="item in model">
+      <span class="label label-primary autocomplete-selected" ng-show="model">
+        {{ item[autocomplete] }} <i class="fa fa-times" aria-hidden="true" ng-click="unselect($index)"></i>
+      </span>
+    </li>
+  </ul>
+
+  <div class="m-t-xs" ng-show="(form.forceValidation || form.$submitted || (form.$dirty && formModel.$dirty)) && formModel.$invalid">
+    <small class="text-danger" ng-show="formModel.$error.required">Ingrese {{ label }}.</small>
+  </div>
+
+</div>

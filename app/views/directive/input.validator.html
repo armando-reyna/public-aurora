@@ -1,0 +1,18 @@
+<div class="form-group" ng-class="(form.forceValidation || form.$submitted || (form.$dirty && formModel.$dirty)) && formModel.$invalid ? 'has-error' : ''">
+  <label>{{label}} <strong class="red" ng-if="required">*</strong></label>
+  <input type="{{type}}"
+         class="form-control"
+         name="{{inputName}}"
+         ng-model="model"
+         ng-required="required"
+         ng-minlength="minLength ? minLength : null"
+         maxlength="{{maxLength}}"
+         placeholder="{{placeholder}}"
+         restrict-input="{{restrict}}">
+  <div class="m-t-xs" ng-show="(form.forceValidation || form.$submitted || (form.$dirty && formModel.$dirty)) && formModel.$invalid">
+    <small class="text-danger" ng-show="formModel.$error.required">Ingrese {{ label }}.</small>
+    <small class="text-danger" ng-show="formModel.$error.minlength">{{ label }} debe contener al menos {{ minLength }} caracteres.</small>
+    <small class="text-danger" ng-show="formModel.$error.email">Correo electrónico inválido.</small>
+    <small class="text-danger" ng-show="formModel.$error.duplicated">{{ label }} ya existe, no puede ser duplicado.</small>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="inmodal">
+  <form role="form" name="userForm" novalidate ng-submit="vm.send()">
+    <div class="modal-header">
+      <h4 class="modal-title">Restablecer contraseña</h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="form-group" ng-class="userForm.$dirty && userForm.user.$invalid ? 'has-error' : ''">
+        <label>Correo Electrónico</label>
+        <input type="email" class="form-control" name="user" placeholder="E-mail" ng-model="vm.user.user" required>
+        <div class="m-t-xs" ng-show="userForm.$dirty && userForm.user.$invalid">
+          <small class="text-danger" ng-show="userForm.user.$error.required">Ingrese un correo electrónico.</small>
+          <small class="text-danger" ng-show="userForm.user.$error.email">Correo electrónico inválido.</small>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()"><strong>Cancelar</strong></button>
+      <button class="btn btn-sm btn-primary" type="submit"><strong>Restablecer</strong></button>
+    </div>
+  </form>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

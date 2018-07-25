@@ -1,0 +1,188 @@
+<div class="wrapper wrapper-content">
+    <div class="row" ng-hide="vm.selectedBranch">
+        <div class="col-lg-12 animated fadeInRight">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sucursales</h5>
+                    <div ibox-tools></div>
+                </div>
+                
+                <div class="btn-bar">
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Actualizar cub&iacute;culos" ng-click="vm.refresh()">
+                        <i class="fa fa-refresh"></i> Actualizar Lista
+                    </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Seleccionar todos" ng-click="vm.selectAll()">
+                        <i class="fa fa-check"></i>
+                        <span ng-hide="vm.allselected">Seleccionar todos</span>
+                        <span ng-show="vm.allselected">Deseleccionar todos</span>
+                    </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar cub&iacute;culo" ng-click="vm.openBranchModal(false)">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar cub&iacute;culo" ng-disabled="!vm.updateEnabled" ng-click="vm.openBranchModal(true)">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Activar" ng-disabled="!vm.activateEnabled" ng-click="vm.branchesActivate()">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar" ng-disabled="!vm.deactivateEnabled" ng-click="vm.branchesDeactivate()">
+                        <i class="fa fa-times"></i>
+                    </button>
+                                        
+                    <label class="margin-left-md">
+                        <input type="checkbox" ng-model="vm.inactiveBranches" ng-click="vm.refresh()"> &nbsp;Sucursales inactivas
+                    </label>
+                </div>
+                
+                <div class="ibox-content">
+
+                    <table datatable="ng" dt-options="dtOptions"  class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Estado</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Galería</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="branch in vm.branchList">
+                            <td class="text-center">
+                                <input type="checkbox" ng-model="branch.selected" ng-click="vm.enableBts()">
+                            </td>
+                            <!-- <td ng-if="vm.inactiveBranches"> -->
+                            <td>
+                                <label class="label label-primary" ng-show="branch.active">Activo</label>
+                                <label class="label label-danger" ng-hide="branch.active">Inactivo</label>
+                            </td>
+                            <td>{{branch.name}}</td>
+                            <td>{{branch.address}}</td>
+                            <td class="text-center">
+                                <i class="fa fa-picture-o icon-sm" ng-click="vm.showFilesSection(branch)"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row wrapper border-bottom white-bg page-heading" ng-show="vm.selectedBranch">
+        <div class="col-lg-9">
+            <h2 class="link" ng-click="vm.clearSelectedBranch()"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                Sucursales</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="" ng-click="vm.clearSelectedBranch()">Sucursales</a>
+                </li>
+                <li>
+                    {{vm.selectedBranch.name}}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div ng-show="vm.selectedBranch">
+
+        <div class="row" ng-if="availablePercentage <= 1">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h3 class="error">Ha rebasado el límite de espacio en la nube.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="availablePercentage > 1">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="file-manager">
+                            <form name="uploadBranchFileForm" class="form-horizontal" role="form">
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="col-sm-12 btn btn-primary" name="branchFile" ngf-multiple="true" type="file"
+                                                ngf-select="vm.uploadBranchFile($files)">Selecciona un archivo</button>
+                                        <!-- div class="m-t-xs">
+                                            <small class="text-danger" ng-show="uploadBranchFileForm.branchFile.$error.maxSize">Límite de archivo 2MB</small>
+                                        </div -->
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="file-box" ng-show="vm.files.length == 0">
+                            <div class="file-box">
+
+                                <div class="file">
+                                    <span class="corner"></span>
+                                    <div class="icon">
+                                        <i class="fa fa-folder-open-o"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        No hay archivos guardados.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file-box" ng-repeat="file in vm.files track by $index" ng-hide="vm.files.length == 0">
+                            <div class="file">
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-1">
+                                        <a ng-class="(vm.selectedBranch.favoriteImgName == file.name) ? 'fa fa-star' : 'fa fa-star-o'" href="" ng-click="vm.setFavoriteImage(vm.selectedBranch.id, file.name);" title="Mi favorita"/>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <a class="fa fa-times" href="" ng-click="vm.deleteBranchFile(vm.selectedBranch.id, file.name);" title="Eliminar"/>
+                                    </div>
+                                </div>
+                                <a ng-click="vm.carouselModal(vm.files, $index)">
+                                    <span class="corner"></span>
+
+                                    <div class="icon" ng-if="!file.imageFile">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="image" ng-if="file.imageFile">
+                                        <img alt="image" class="img-responsive" ng-src="{{CONSTANTS.API_URI + 'branch/view-file?' + file.url}}">
+                                    </div>
+
+                                    <div class="file-name">
+                                        {{file.name}}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="busy" ng-show="vm.loading">
+    <div class="spiner-example">
+        <div class="sk-spinner sk-spinner-wave">
+            Cargando...
+            <div class="sk-rect1"></div>
+            <div class="sk-rect2"></div>
+            <div class="sk-rect3"></div>
+            <div class="sk-rect4"></div>
+            <div class="sk-rect5"></div>
+        </div>
+    </div>
+</div>
+<style>
+    .modal-body {
+        padding: 10px 10px 10px 10px;
+    }
+</style>

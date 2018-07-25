@@ -1,0 +1,99 @@
+<div class="inmodal">
+  <form role="form" name="appointmentForm" novalidate ng-submit="vm.save()">
+    <div class="modal-header">
+      <h4 class="modal-title">Agendar Cita</h4>
+    </div>
+    <div class="modal-body">
+	  
+      <div class="form-group" ng-class="vm.isDirty() && appointmentForm.date.$invalid ? 'has-error' : ''">
+        <label>Fecha </label>
+        <div class="input-group date">
+          <input name="date" type="datetime" class="form-control date-time" date-time
+                 ng-model="vm.appointment.date" view="date" auto-close="true" min-view="date"
+                 format="DD-MM-YYYY" required readonly>
+									<span class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</span>
+        </div>
+        <div class="m-t-xs" ng-show="vm.isDirty() && appointmentForm.date.$invalid">
+          <small class="text-danger" ng-show="appointmentForm.date.$error.required">Elija la fecha.</small>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="vm.isDirty() && appointmentForm.startHour.$invalid ? 'has-error' : ''">
+        <label>Hora Inicio </label>
+        <select class="form-control select2_demo_1 form-control select2-hidden-accessible" name="startHour"
+                tabindex="-1" aria-hidden="true" ng-model="vm.appointment.startHour"
+                ng-options="h | formatHr for h in vm.startHours" required>
+          <option value="">Seleccione una hora</option>
+        </select>
+        <div class="m-t-xs" ng-show="vm.isDirty() && appointmentForm.startHour.$invalid">
+          <small class="text-danger" ng-show="appointmentForm.startHour.$error.required">Elija una hora de inicio.</small>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="vm.isDirty() && appointmentForm.endHour.$invalid ? 'has-error' : ''">
+        <label>Hora Fin </label>
+        <select class="form-control select2_demo_1 form-control select2-hidden-accessible" name="endHour"
+                tabindex="-1" aria-hidden="true" ng-model="vm.appointment.endHour"
+                ng-options="h | formatHr for h in vm.endHours" required>
+          <option value="">Seleccione una hora</option>
+        </select>
+        <div class="m-t-xs" ng-show="vm.isDirty() && appointmentForm.endHour.$invalid">
+          <small class="text-danger" ng-show="appointmentForm.endHour.$error.required">Elija una hora de fin.</small>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="vm.isDirty() && appointmentForm.title.$invalid ? 'has-error' : ''">
+        <label>Paciente </label>
+        <input type="textarea" class="form-control" name="title" ng-model="vm.appointment.title" maxlength="100" required>
+        <div class="m-t-xs" ng-show="vm.isDirty() && appointmentForm.title.$invalid">
+          <small class="text-danger" ng-show="appointmentForm.title.$error.required">Ingrese el paciente.</small>
+          <small class="text-danger" ng-show="appointmentForm.title.$error.maxlength">Máximo 100 carácteres.</small>
+        </div>
+      </div>
+
+      <div class="form-group" ng-if="vm.isAdmin" ng-class="vm.isDirty() && appointmentForm.doctor.$invalid ? 'has-error' : ''">
+        <label>Doctor </label>
+        <angucomplete ng-hide="vm.appointment.doctor" id="doctorList"
+                      placeholder="Buscar Doctor"
+                      pause="100"
+                      selectedobject="vm.selectedDoctorAutocomplete"
+                      localdata="vm.doctorList"
+                      searchfields="name"
+                      titlefield="name"
+                      minlength="1"
+                      inputclass="form-control form-control-small"/>
+
+        <input type="hidden" name="doctor" ng-model="vm.appointment.doctor" required>
+
+        <div class="spacer-md" ng-show="vm.appointment.doctor"></div>
+        <span class="label label-primary autocomplete-selected" ng-show="vm.appointment.doctor">
+          {{ vm.appointment.doctor.name }} <i class="fa fa-times" aria-hidden="true" ng-click="vm.unselectDoctor()"></i>
+        </span>
+        <div class="m-t-xs" ng-show="vm.isDirty() && appointmentForm.doctor.$invalid ? 'has-error' : ''">
+          <small class="text-danger" ng-show="appointmentForm.doctor.$error.required">Elija un doctor.</small>
+        </div>
+      </div>
+      
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-white" ng-click="vm.cancel()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" type="submit" ng-disabled="vm.enableSaveBtn"><strong>Guardar</strong>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

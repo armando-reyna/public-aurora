@@ -1,0 +1,34 @@
+<div class="inmodal">
+  <form role="form" name="branchForm" novalidate ng-submit="vm.save()">
+    <div class="modal-header">
+      <h4 class="modal-title">{{vm.action}} Sucursal</h4>
+    </div>
+    <div class="modal-body">
+
+      <input-validator input-name="name" label="Nombre" form="branchForm" model="vm.branch.name" required="true"
+                       ng-minlength="3" maxlength="100"></input-validator>
+
+      <textarea-validator input-name="address" label="Dirección" form="branchForm" model="vm.branch.address" required="true"
+                       maxlength="500"></textarea-validator>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-white" ng-click="vm.cancel()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" type="submit" ng-disabled="vm.enableSaveBtn"><strong>Guardar</strong>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

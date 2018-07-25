@@ -1,0 +1,115 @@
+<div class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-lg-12 animated fadeInRight">
+
+      <div class="ibox-content">
+        <h3>Reporte Cobranza</h3>
+
+        <div class="ibox-content">
+          <h3><i class="fa fa-filter" aria-hidden="true"></i> Filtros</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <form class="form-inline">
+
+                <div class="form-group">
+                  <label class="font-normal">Sucursal</label>
+                  <div class="input-group">
+                    <select class="form-control"
+                            name="branch"
+                            data-ng-options="branch.name for branch in vm.branchList track by branch.id"
+                            data-ng-model="vm.selectedBranch">
+                      <option value="" ng-if="vm.user.role.id !== CONSTANTS.ROLES.BRANCH_ADMIN">Todas</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="font-normal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                </div>
+
+                <div class="form-group">
+                  <label class="font-normal">Fecha Inicio</label>
+                  <div class="input-group date">
+                    <input type="datetime" class="form-control" date-time
+                           ng-model="vm.fechaInicio" view="date" auto-close="true"
+                           min-view="date" format="YYYY-MM-DD">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="font-normal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                </div>
+
+                <div class="form-group">
+                  <label class="font-normal">Fecha Fin</label>
+                  <div class="input-group date">
+                    <input type="datetime" class="form-control" date-time
+                           ng-model="vm.fechaFin" view="date" auto-close="true"
+                           min-view="date" format="YYYY-MM-DD">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="font-normal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                </div>
+
+                <div class="form-group">
+                  <label class="font-normal">Usuario</label>
+                  <div class="input-group">
+
+                    <autocomplete-simple input-name="name" autocomplete="name"
+                                            model="vm.selectedUser" list="vm.userList" search-str="vm.selectedUser.name">
+                    </autocomplete-simple>
+
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+
+          <div class="hr-line-dashed"></div>
+
+          <p>Seleccione el formato del reporte.</p>
+
+          <div class="row">
+            <div class="col-md-4">
+              <button class="btn btn-primary pay-btn"
+                      ng-click="vm.generateCollectionReport(CONSTANTS.REPORTS.FORMAT.EXCEL)">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-primary pay-btn"
+                      ng-click="vm.generateCollectionReport(CONSTANTS.REPORTS.FORMAT.PDF)">
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

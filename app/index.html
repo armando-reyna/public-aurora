@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="aurora">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
+  <!-- Page title set in pageTitle directive -->
+  <title page-title></title>
+
+  <!-- Google Open Sans -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+  <link href="styles/vendor.min.css" rel="stylesheet">
+  <link href="styles/animate.css" rel="stylesheet">
+  <link href="styles/style.css" rel="stylesheet">
+
+</head>
+
+<!-- ControllerAs syntax -->
+<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
+<body ng-controller="MainCtrl as main">
+
+<div class="busy" ng-show="main.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main view  -->
+<div ui-view></div>
+
+<script src="scripts/vendor-essential.min.v4.1.js"></script>
+<script src="scripts/vendor.v4.1.min.js"></script>
+<script src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
+<script src="scripts/script.v4.2.min.js"></script>
+
+</body>
+</html>

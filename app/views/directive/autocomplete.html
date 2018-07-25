@@ -1,0 +1,22 @@
+<div class="form-group">
+  <label ng-show="label">{{label}}</label>
+
+  <angucomplete ng-hide="model"
+                placeholder="{{placeholder}}"
+                pause="100"
+                search-str="searchStr"
+                selectedobject="selectedAutocomplete"
+                localdata="list"
+                searchfields="{{autocomplete}}"
+                titlefield="{{autocomplete}}"
+                minlength="1"
+                inputclass="form-control form-control-small"/>
+
+  <input type="hidden" name="{{inputName}}" ng-model="model" ng-required="required">
+
+  <div class="spacer-sm" ng-show="model"></div>
+  <span class="label label-primary autocomplete-selected" ng-show="model">
+    {{ model[autocomplete] }} <i class="fa fa-times" aria-hidden="true" ng-click="unselect()"></i>
+  </span>
+
+</div>

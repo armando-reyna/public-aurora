@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Usuarios",
+    "ngClass": "",
+    "uiSref": "index.user",
+    "iClass": "fa fa-users",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Lead Management",
+    "ngClass": "",
+    "uiSref": "index",
+    "iClass": "fa fa-star",
+    "faArrow": "fa arrow",
+    "hasSubitems": true,
+    "subitems": [
+      {
+        "nameChild": "Edición de Leads",
+        "ngClass": "",
+        "uiSref": "index.leads",
+        "actions": "Parameter"
+      },
+      {
+        "nameChild": "Seguimiento de Leads",
+        "ngClass": "",
+        "uiSref": "index.leads-follow-up",
+        "actions": "Create"
+      },
+      {
+        "nameChild": "Clientes",
+        "ngClass": "",
+        "uiSref": "index.leads-clients",
+        "actions": "Create"
+      }
+    ]
+  }
+]

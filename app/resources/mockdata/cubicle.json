@@ -1,0 +1,12 @@
+{
+  "name": "Cubicle Test",
+  "branch": {
+    "id": 1
+  },
+  "cubicleType": {
+    "id": 1
+  },
+  "capacity": 60,
+  "description": "ASDFGHJKLASDFGH",
+  "location": "PB"
+}

@@ -1,0 +1,37 @@
+<div class="inmodal">
+  <form role="form" name="statusForm" novalidate ng-submit="vm.save()">
+    <div class="modal-header">
+      <h4 class="modal-title">{{vm.action}} status</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" ng-class="statusForm.$dirty && statusForm.name.$invalid ? 'has-error' : ''">
+        <label>Status</label>
+        <input type="hidden" name="id" ng-model="vm.status.id">
+        <input type="text" class="form-control" name="name" ng-model="vm.status.status" ng-minlength="2" maxlength="20" required>
+        <div class="m-t-xs" ng-show="statusForm.$dirty && statusForm.name.$invalid">
+          <small class="text-danger" ng-show="statusForm.name.$error.required">Ingrese un status.</small>
+          <small class="text-danger" ng-show="statusForm.name.$error.minlength">El status debe contener al menos 2 car&aacute;cteres.
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-white" ng-click="vm.cancel()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" type="submit" ng-disabled="vm.enableSaveBtn"><strong>Guardar</strong>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,160 @@
+.calendar-table {
+  width: 100%;
+  .today {
+    background-color: rgba(229, 50, 53, 0.17);
+  }
+  th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+    text-align: center;
+    width: 100%/7;
+  }
+  td {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+    text-align: center;
+    height: 10vw;
+    vertical-align: top;
+    .day-no {
+      display: inline-block;
+      padding: 5px;
+    }
+    .event {
+      padding: 5px;
+      width: 99%;
+      margin-bottom: 1px;
+      max-width: 11.7vw;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .event:hover {
+      content: 'Cancelar';
+    }
+    .event-add {
+      padding: 5px;
+      width: 99%;
+      margin-bottom: 1px;
+      max-width: 11.7vw;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+}
+
+@media (max-width: 1380px) {
+  .calendar-table {
+    td {
+      .event {
+        max-width: 9.7vw;
+      }
+      .event-add {
+        max-width: 9.7vw;
+      }
+    }
+  }
+}
+
+.calendar-table-b {
+  width: 100%;
+  .today {
+    background-color: rgba(229, 50, 53, 0.17);
+  }
+  th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+    text-align: center;
+  }
+  .now {
+    background-color: rgba(255, 254, 68, 0.24);
+    font-weight: bold;
+  }
+  .td-hr {
+    width: 7%;
+    min-width: 80px;
+  }
+  .td-day {
+    width: 93%/7;
+  }
+  td {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+    text-align: center;
+    vertical-align: middle;
+    height: @event-height;
+    .day-no {
+      display: inline-block;
+      padding: 5px;
+    }
+    .td-hour {
+      max-height: @event-height;
+    }
+    .event {
+      padding: 5px;
+      width: 99%;
+      margin-bottom: 1px;
+    }
+    .event:hover {
+      content: 'Cancelar';
+    }
+    .event-add {
+      padding: 1px 5px;
+      height: @event-height - 2;
+      width: 99%;
+      margin-bottom: 1px;
+    }
+    .event-1 {height: @event-height*1;}
+    .event-2 {height: @event-height*2;}
+    .event-3 {height: @event-height*3;}
+    .event-4 {height: @event-height*4;}
+    .event-5 {height: @event-height*5;}
+    .event-6 {height: @event-height*6;}
+    .event-7 {height: @event-height*7;}
+    .event-8 {height: @event-height*8;}
+    .event-9 {height: @event-height*9;}
+    .event-10 {height: @event-height*10;}
+    .event-11 {height: @event-height*11;}
+    .event-12 {height: @event-height*12;}
+    .event-13 {height: @event-height*13;}
+    .event-14 {height: @event-height*14;}
+    .event-15 {height: @event-height*15;}
+    .event-16 {height: @event-height*16;}
+    .event-17 {height: @event-height*17;}
+    .event-18 {height: @event-height*18;}
+    .event-19 {height: @event-height*19;}
+    .event-20 {height: @event-height*20;}
+    .event-21 {height: @event-height*21;}
+    .event-22 {height: @event-height*22;}
+    .event-23 {height: @event-height*23;}
+    .event-24 {height: @event-height*24;}
+    .event-25 {height: @event-height*25;}
+    .event-26 {height: @event-height*26;}
+    .event-27 {height: @event-height*27;}
+    .event-28 {height: @event-height*28;}
+    .event-29 {height: @event-height*29;}
+    .event-30 {height: @event-height*30;}
+    .event-31 {height: @event-height*31;}
+    .event-32 {height: @event-height*32;}
+    .event-33 {height: @event-height*33;}
+    .event-34 {height: @event-height*34;}
+    .event-35 {height: @event-height*35;}
+    .event-36 {height: @event-height*36;}
+    .event-37 {height: @event-height*37;}
+    .event-38 {height: @event-height*38;}
+    .event-39 {height: @event-height*39;}
+    .event-40 {height: @event-height*40;}
+    .event-41 {height: @event-height*41;}
+    .event-42 {height: @event-height*42;}
+    .event-43 {height: @event-height*43;}
+    .event-44 {height: @event-height*44;}
+    .event-45 {height: @event-height*45;}
+    .event-46 {height: @event-height*46;}
+    .event-47 {height: @event-height*47;}
+    .event-48 {height: @event-height*48;}
+  }
+}

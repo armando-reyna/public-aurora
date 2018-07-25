@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Reservar",
+    "ngClass": "",
+    "uiSref": "index.doctors-appt",
+    "iClass": "fa fa-calendar-plus-o",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "subitems": []
+  },
+  {
+    "name": "Mis Citas",
+    "ngClass": "",
+    "uiSref": "index.usercubicles",
+    "iClass": "fa fa-calendar-check-o",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "subitems": []
+  },
+  {
+    "name": "Finanzas/Historial",
+    "ngClass": "",
+    "uiSref": "index.doctors-finances",
+    "iClass": "fa fa-money",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "subitems": []
+  },
+  {
+    "name": "Tienda",
+    "ngClass": "",
+    "uiSref": "index.doctors-store",
+    "iClass": "fa fa-credit-card",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "subitems": []
+  },
+  {
+    "name": "Tutoriales",
+    "ngClass": "",
+    "uiSref": "index",
+    "iClass": "fa fa-video-camera",
+    "faArrow": "fa arrow",
+    "hasSubitems": true,
+    "subitems": [
+      {
+        "nameChild": "Agendar Cita",
+        "ngClass": "",
+        "uiSref": "index.tutorial_01",
+        "actions": "Parameter"
+      }
+    ]
+  }
+]

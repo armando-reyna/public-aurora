@@ -1,0 +1,229 @@
+<div class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-lg-12 animated fadeInRight">
+
+      <div class="ibox float-e-margins" ng-show="vm.isShowUsers">
+        <div class="ibox-title">
+          <h5>Usuarios</h5>
+          <div ibox-tools></div>
+        </div>
+
+        <div class="btn-bar">
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Actualizar Usuarios"
+                  ng-click="vm.refresh()">
+            <i class="fa fa-refresh"></i> Actualizar Lista
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Seleccionar todos"
+                  ng-click="vm.selectAll()">
+            <i class="fa fa-check"></i>
+            <span ng-hide="vm.allselected">Seleccionar todos</span>
+            <span ng-show="vm.allselected">Deseleccionar todos</span>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"
+                  ng-click="vm.openUserModal(false)">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar"
+                  ng-disabled="!vm.updateEnabled" ng-click="vm.openUserModal(true)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Activar"
+                  ng-disabled="!vm.activateEnabled" ng-click="vm.activateUsers()">
+            <i class="fa fa-check"></i>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar"
+                  ng-disabled="!vm.deactivateEnabled" ng-click="vm.deactivateUsers()">
+            <i class="fa fa-times"></i>
+          </button>
+          <label class="margin-left-md">
+            <input type="checkbox" ng-model="vm.inactiveUsers" ng-click="vm.refresh()"> &nbsp;Usuarios Inactivos
+          </label>
+          <label class="margin-left-md">
+            <input type="checkbox" ng-model="vm.onlyClients" ng-click="vm.refresh()"> &nbsp;Sólo clientes
+          </label>
+        </div>
+
+        <div class="ibox-content">
+
+          <table datatable="ng" dt-options="dtOptions"
+                 class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Situación</th>
+              <th>Nombre</th>
+              <th ng-hide="vm.onlyClients">Rol</th>
+              <th>Sucursal</th>
+              <th>Usuario</th>
+              <th ng-show="vm.onlyClients">Fecha de Corte</th>
+              <th ng-show="vm.onlyClients">Membresía</th>
+              <th ng-show="vm.onlyClients">Horas Restantes</th>
+              <th ng-show="vm.onlyClients">Caducidad</th>
+              <th>
+                <span ng-show="vm.onlyClients">Detalle</span>
+                <span ng-hide="vm.onlyClients">Membresía</span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in vm.userList">
+              <td class="text-center">
+                <input type="checkbox" ng-model="user.selected" ng-click="vm.enableBts()">
+              </td>
+              <td>
+                <label class="label label-primary" ng-show="user.active">Activo</label>
+                <label class="label label-danger" ng-hide="user.active">Inactivo</label>
+              </td>
+              <td>{{user.name}}</td>
+              <td ng-hide="vm.onlyClients">{{user.role.name}}</td>
+              <td>{{user.branch.name}}</td>
+              <td>{{user.user}}</td>
+              <td ng-show="vm.onlyClients">{{user.cutoffDate | date:'dd/MM/yyyy'}}</td>
+              <td ng-show="vm.onlyClients">{{user.currentMembership.type.name}}</td>
+              <td ng-show="vm.onlyClients">
+                <span ng-class="user.membershipHrs < 5 ? 'error' : ''" ng-hide="user.hasUnlimitedMembership">
+                    {{user.membershipHrs}} hrs. restantes</span>
+                <span class="error" ng-show="user.hasUnlimitedMembership">
+                    HORAS ILIMITADAS</span>
+              </td>
+              <td ng-show="vm.onlyClients">{{user.currentMembership.expirationDate | date:'dd/MM/yyyy'}}</td>
+              <td>
+                <i class="fa fa-credit-card icon-sm" aria-hidden="true"
+                   ng-if="user.role.id == CONSTANTS.ROLES.CLIENT" ng-click="vm.showStore(user)"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="ibox float-e-margins" ng-show="vm.isShowStore">
+        <div class="ibox-title">
+          <h5>Membres&iacute;as</h5>
+          <div ibox-tools></div>
+        </div>
+
+        <div class="btn-bar">
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Regresar a usuarios"
+                  ng-click="vm.backToUsers()">
+            <i class="fa fa-arrow-left"></i> Regresar
+          </button>
+        </div>
+
+        <div class="ibox-content">
+          <h3>Asignaci&oacute;n de membres&iacute;a y horas extra</h3>
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="contact-box center-version no-borders">
+                <a href="">
+                  <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+                  <h3 class="m-b-xs"><strong>{{vm.selectedList[0].name}}</strong></h3>
+                  <div class="font-bold">{{vm.selectedList[0].user}}</div>
+                  <div class="font-bold">Acumulado Horas Restantes:
+                    <span ng-class="vm.selectedList[0].membershipHrs < 5 ? 'error' : ''" ng-hide="vm.selectedList[0].hasUnlimitedMembership">
+                    {{vm.selectedList[0].membershipHrs}} hrs. restantes</span>
+                    <span class="error" ng-show="vm.selectedList[0].hasUnlimitedMembership">
+                    HORAS ILIMITADAS</span>
+                  </div>
+                  <div class="space-15"></div>
+                  <button class="btn btn-sm btn-primary" ng-click="vm.sendReminder(vm.selectedList[0].id)">
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Recordatorio
+                  </button>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-sm-3 b-l b-r">
+              <form role="form" name="storeForm" novalidate ng-submit="vm.saveMembership()">
+                <div class="form-group">
+                  <label>Membres&iacute;as</label>
+                  <select id="membership" class="form-control" name="membership" ng-model="vm.membership"
+                          ng-change="vm.updateSelectedMembership()">
+                    <option value="">Elegir opci&oacute;n</option>
+                    <option ng-repeat="membership in vm.memberships" value="{{membership.id}}">{{membership.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group" ng-show="vm.showUpHours">
+                  <label>Horas disponibles actualmente:</label>&nbsp;<span class="error">{{vm.selectedList[0].membershipHrs}}</span>
+                  <br><br>
+                  <label>Agregar horas, {{vm.extraHour.price | currency}} por hora</label>
+                  <input type="hidden" class="form-control" name="extraHour" ng-model="vm.extraHour.id">
+                  <input type="hidden" class="form-control" name="total" ng-model="vm.total">
+
+                  <div class="input-group input-group-number">
+                  <span class="clickable input-group-addon" ng-click="vm.addHr()">
+										<i class="fa fa-arrow-up"></i>
+									</span>
+                    <input type="text" class="form-control" id="extraHour" name="extraHrs" ng-model="vm.extraHrs" readonly required>
+                    <span class="clickable input-group-addon" ng-click="vm.subsHr()">
+										<i class="fa fa-arrow-down"></i>
+									</span>
+                  </div>
+
+                </div>
+                <div>
+                  <label class="pull-right m-t-n-xs">Total: {{vm.total | currency}}</label> <br> <br>
+                  <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Guardar</strong>
+                  </button>
+                  <label>
+                    <div class="icheckbox_square-green" style="position: relative;">
+                      <input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;">
+                      <ins class="iCheck-helper"
+                           style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    </div>
+                  </label>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-sm-3" ng-show="vm.isShowDetails">
+              <address class="m-t-md">
+                <img ng-src="{{CONSTANTS.API_URI}}/membership/view-file?membershipId={{vm.selectedMembership.id}}"><br>
+                <strong>{{vm.selectedMembership.name}}</strong><br>
+                Horas: &nbsp;
+                <span ng-show="vm.selectedMembership.hours < 999">{{vm.selectedMembership.hours}}</span>
+                <span ng-hide="vm.selectedMembership.hours < 999" class="primary-color"><strong>Ilimitadas</strong></span>
+                <p>Precio: {{vm.selectedMembership.price | currency}}</p>
+                <p ng-show="vm.selectedMembership.group == '1' && vm.selectedMembership.hours < 999">
+                  Precio hora extra: {{vm.selectedMembership.costPerHr  | currency}}
+                </p>
+              </address>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="ibox-content">
+          <h3>Membresías Asignadas</h3>
+          <div class="row">
+            <div class="col-sm-3" ng-repeat="membership in vm.selectedList[0].relatedMembership">
+              <address class="m-t-md">
+                <img ng-src="{{CONSTANTS.API_URI}}/membership/view-file?membershipId={{membership.type.id}}"><br>
+                <strong>{{membership.type.name}}</strong><br>
+                Caducidad: {{membership.formattedExpirationDate}}<br>
+
+                <span ng-show="membership.type.id != 8">
+                Horas Membresía: {{membership.type.hours}}<br>
+                Horas Restantes:
+                <span ng-hide="membership.type.unlimited">
+                {{membership.availableHours}}</span>
+                <span class="error" ng-show="membership.type.unlimited">
+                HORAS ILIMITADAS</span><br>
+                </span>
+
+                <span ng-show="membership.type.id == 8">
+                Horas: {{membership.availableHours}}<br><br>
+                </span>
+
+              </address>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

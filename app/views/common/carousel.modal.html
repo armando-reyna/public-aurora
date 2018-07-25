@@ -1,0 +1,31 @@
+<div class="inmodal">
+    <div class="modal-header">
+      <h4 class="modal-title">Galería de imagenes</h4>
+    </div>
+    <div class="modal-body">
+
+      <uib-carousel active="vm.active">
+        <uib-slide ng-repeat="slide in vm.images track by slide.id" index="slide.id">
+          <img ng-src="{{slide.url}}" style="margin:auto;">
+          <div class="carousel-caption"></div>
+        </uib-slide>
+      </uib-carousel>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-white" ng-click="vm.cancel()">Cerrar</button>
+    </div>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

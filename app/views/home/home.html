@@ -1,0 +1,20 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Inicio</h2>
+    <h3>Bienvenido {{main.token.name}}</h3>
+    <h4>Para continuar selecciona una opción del menú.</h4>
+  </div>
+  <div class="col-lg-2">
+  </div>
+</div>
+
+<div class="row wrapper border-bottom white-bg page-heading" ng-if="headerInfo.role.id == CONSTANTS.ROLES.SUPER_ADMIN || headerInfo.role.id == CONSTANTS.ROLES.BRANCH_ADMIN">
+  <div class="col-lg-4">
+    <h4>Espacio en la Nube</h4>
+    <h4 class="error" ng-if="availablePercentage <= 1">Ha rebasado el límite de espacio en la nube.</h4>
+    <h5 class="primary-color">Ocupado: {{ vm.data[0] | number }} MB - {{ occupiedPercentage }}%</h5>
+    <h5 class="secondary-color">Disponible: {{ vm.data[1] | number }} MB - {{ availablePercentage }}%</h5>
+    <canvas id="pie" class="chart chart-pie" chart-data="vm.data" chart-labels="vm.labels" chart-options="vm.options">
+    </canvas>
+  </div>
+</div>

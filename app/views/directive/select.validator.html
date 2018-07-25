@@ -1,0 +1,12 @@
+<div class="form-group" ng-class="(form.$submitted || (form.$dirty && formModel.$dirty)) && formModel.$invalid ? 'has-error' : ''">
+  <label>{{label}} <strong class="red" ng-if="required">*</strong></label>
+  <select class="form-control"
+          name="{{inputName}}"
+          data-ng-options="option[optionLabel] for option in list track by option.id"
+          data-ng-model="model" ng-required="required">
+    <option value="">Seleccione {{label}}</option>
+  </select>
+  <div class="m-t-xs" ng-show="(form.$submitted || (form.$dirty && formModel.$dirty)) && formModel.$invalid">
+    <small class="text-danger" ng-show="formModel.$error.required">Seleccione {{ label }}.</small>
+  </div>
+</div>

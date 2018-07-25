@@ -1,0 +1,221 @@
+<div class="wrapper wrapper-content">
+  <div class="row" ng-hide="vm.selectedCubicle">
+    <div class="col-lg-12 animated fadeInRight">
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Cubículos</h5>
+          <div ibox-tools></div>
+        </div>
+
+        <div class="btn-bar">
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left"
+                  title="Actualizar cub&iacute;culos" ng-click="vm.refresh()">
+            <i class="fa fa-refresh"></i> Actualizar Lista
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Seleccionar todos"
+                  ng-click="vm.selectAll()">
+            <i class="fa fa-check"></i>
+            <span ng-hide="vm.allselected">Seleccionar todos</span>
+            <span ng-show="vm.allselected">Deseleccionar todos</span>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                  title="Agregar cub&iacute;culo" ng-click="vm.openCubicleModal(false)">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+                  title="Modificar cub&iacute;culo" ng-disabled="!vm.updateEnabled"
+                  ng-click="vm.openCubicleModal(true)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Activar"
+                  ng-disabled="!vm.activateEnabled" ng-click="vm.cubiclesActivate()">
+            <i class="fa fa-check"></i>
+          </button>
+          <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar"
+                  ng-disabled="!vm.deactivateEnabled" ng-click="vm.cubiclesDeactivate()">
+            <i class="fa fa-times"></i>
+          </button>
+
+          <label class="margin-left-md">
+            <input type="checkbox" ng-model="vm.inactiveCubicles" ng-click="vm.refresh()"> &nbsp;Cub&iacute;culos
+            inactivos
+          </label>
+
+          <div class="inline margin-left-md" ng-if="vm.user.role.id !== CONSTANTS.ROLES.BRANCH_ADMIN">
+            <select class="form-control"
+                    name="branch"
+                    data-ng-options="branch.name for branch in vm.branchList track by branch.id"
+                    data-ng-model="vm.branch" ng-change="vm.refresh()">
+              <option value="">Filtrar por sucursal</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="ibox-content">
+
+          <table datatable="ng" dt-options="dtOptions"
+                 class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+            <tr>
+              <th>Orden</th>
+              <th>&nbsp;</th>
+              <th ng-show="vm.inactiveCubicles">Estado</th>
+              <th>Nombre</th>
+              <th ng-hide="vm.branch">Sucursal</th>
+              <th>Tipo</th>
+              <th>Metros cuadrados</th>
+              <th>Descripci&oacute;n</th>
+              <th>Ubicaci&oacute;n</th>
+              <th>Galería</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="cubicle in vm.cubicleList">
+              <td>{{cubicle.sort}}</td>
+              <td class="text-center">
+                <input type="checkbox" ng-model="cubicle.selected" ng-click="vm.enableBts()">
+              </td>
+              <td ng-show="vm.inactiveCubicles">
+                <label class="label label-primary" ng-show="cubicle.active">Activo</label>
+                <label class="label label-danger" ng-hide="cubicle.active">Inactivo</label>
+              </td>
+              <td>{{cubicle.name}}</td>
+              <td ng-hide="vm.branch">
+                {{cubicle.branch.name}}
+              </td>
+              <td>{{cubicle.cubicleType.name}}</td>
+              <td>{{cubicle.capacity}}</td>
+              <td>{{cubicle.description}}</td>
+              <td>{{cubicle.location}}</td>
+              <td class="text-center">
+                <i class="fa fa-picture-o icon-sm" ng-click="vm.showFilesSection(cubicle)"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row wrapper border-bottom white-bg page-heading" ng-show="vm.selectedCubicle">
+    <div class="col-lg-9">
+      <h2 class="link" ng-click="vm.clearSelectedCubicle()"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+        Cub&iacute;culos</h2>
+      <ol class="breadcrumb">
+        <li>
+          <a href="" ng-click="vm.clearSelectedCubicle()">Cub&iacute;culos</a>
+        </li>
+        <li>
+          {{vm.selectedCubicle.name}}
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div ng-show="vm.selectedCubicle">
+
+    <div class="row" ng-if="availablePercentage <= 1">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-content">
+            <h3 class="error">Ha rebasado el límite de espacio en la nube.</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" ng-if="availablePercentage > 1">
+      <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+          <div class="ibox-content">
+            <div class="file-manager">
+              <form name="uploadCubicleFileForm" class="form-horizontal" role="form">
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <button class="col-sm-12 btn btn-primary" name="cubicleFile" ngf-multiple="true" type="file"
+                            ngf-select="vm.uploadCubicleFile($files)">Selecciona un archivo
+                    </button>
+                    <!-- div class="m-t-xs">
+                        <small class="text-danger" ng-show="uploadCubicleFileForm.cubicleFile.$error.maxSize">Límite de archivo 2MB</small>
+                    </div -->
+                  </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 animated fadeInRight">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="file-box" ng-show="vm.files.length == 0">
+              <div class="file-box">
+
+                <div class="file">
+                  <span class="corner"></span>
+                  <div class="icon">
+                    <i class="fa fa-folder-open-o"></i>
+                  </div>
+                  <div class="file-name">
+                    No hay archivos guardados.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="file-box" ng-repeat="file in vm.files track by $index" ng-hide="vm.files.length == 0">
+              <div class="file">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-1">
+                    <a ng-class="(vm.selectedCubicle.favoriteImgName == file.name) ? 'fa fa-star' : 'fa fa-star-o'"
+                       href="" ng-click="vm.setFavoriteImage(vm.selectedCubicle.id, file.name);" title="Mi favorita"/>
+                  </div>
+                  <div class="col-lg-1">
+                    <a class="fa fa-times" href="" ng-click="vm.deleteCubicleFile(vm.selectedCubicle.id, file.name);"
+                       title="Eliminar"/>
+                  </div>
+                </div>
+                <a ng-click="vm.carouselModal(vm.files, $index)">
+                  <span class="corner"></span>
+
+                  <div class="icon" ng-if="!file.imageFile">
+                    <i class="fa fa-file"></i>
+                  </div>
+                  <div class="image" ng-if="file.imageFile">
+                    <img alt="image" class="img-responsive"
+                         ng-src="{{CONSTANTS.API_URI + 'cubicle/view-file?' + file.url}}">
+                  </div>
+
+                  <div class="file-name">
+                    {{file.name}}
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>
+<style>
+  .modal-body {
+    padding: 10px 10px 10px 10px;
+  }
+</style>

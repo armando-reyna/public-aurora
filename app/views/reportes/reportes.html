@@ -1,0 +1,61 @@
+<div class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-lg-12 animated fadeInRight">
+      <div class="ibox-content">
+
+        <h3><i class="fa fa-filter" aria-hidden="true"></i> Filtros</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <form class="form-inline">
+              <div class="form-group">
+                <label class="font-normal">Sucursal</label>
+                <div class="input-group">
+                  <select class="form-control"
+                          name="branch"
+                          data-ng-options="branch.name for branch in vm.branchList track by branch.id"
+                          data-ng-model="vm.selectedBranch" ng-change="vm.refresh()">
+                    <option value="" ng-if="vm.user.role.id !== CONSTANTS.ROLES.BRANCH_ADMIN">Todas</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <h3>{{vm.stateData.pageTitle}}</h3>
+
+        <p>Seleccione el formato del reporte.</p>
+
+        <div class="row">
+          <div class="col-md-4">
+            <button class="btn btn-primary pay-btn" ng-click="vm.generateReport(CONSTANTS.REPORTS.FORMAT.EXCEL)">
+              <i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary pay-btn" ng-click="vm.generateReport(CONSTANTS.REPORTS.FORMAT.PDF)">
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

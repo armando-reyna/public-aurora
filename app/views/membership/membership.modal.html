@@ -1,0 +1,87 @@
+<div class="inmodal">
+  <form role="form" name="membershipForm" novalidate ng-submit="vm.save()">
+    <div class="modal-header">
+      <h4 class="modal-title">{{vm.action}} de membres&iacute;a</h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="form-group" ng-class="vm.isDirty() && membershipForm.name.$invalid ? 'has-error' : ''">
+        <label>Nombre</label>
+        <input type="hidden" name="id" ng-model="vm.membership.id">
+        <input type="text" class="form-control" name="name" ng-model="vm.membership.name" ng-minlength="1" maxlength="49" required>
+        <div class="m-t-xs" ng-show="vm.isDirty() && membershipForm.name.$invalid">
+          <small class="text-danger" ng-show="membershipForm.name.$error.required">Ingrese el nombre de la membres&iacute;a.</small>
+          <small class="text-danger" ng-show="membershipForm.name.$error.minlength">Ingrese al menos 1 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="vm.isDirty() && membershipForm.hours.$invalid ? 'has-error' : ''">
+        <label for="hours">Horas</label>
+        <input type="text" class="form-control" id="hours" name="hours" ng-model="vm.membership.hours" ng-minlength="1" maxlength="49" onlydigits required>
+
+        <div class="m-t-xs" ng-show="vm.isDirty() && membershipForm.hours.$invalid">
+          <small class="text-danger" ng-show="membershipForm.hours.$error.required">Ingrese n&uacute;mero de horas.</small>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="vm.isDirty() && membershipForm.price.$invalid ? 'has-error' : ''">
+        <label>Precio</label>
+        <input type="text" class="form-control" name="price" ng-model="vm.membership.price" ng-minlength="1" maxlength="49" onlydigits required>
+        <div class="m-t-xs" ng-show="vm.isDirty() && membershipForm.price.$invalid">
+          <small class="text-danger" ng-show="membershipForm.price.$error.required">Ingrese el precio de la membres&iacute;a</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>¿Es ilimitada?</label>
+        <input id="unlimited" class="checkbox" name="unlimited" type="checkbox" ng-model="vm.membership.unlimited">
+      </div>
+
+      <div class="form-group" ng-class="vm.isDirty() && membershipForm.file.$invalid ? 'has-error' : ''">
+        <div class="row">
+          <div class="col-md-8">
+            <label>Imagen</label><br>
+            <div class="btn btn-primary" ngf-select="vm.setFile($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"><span>{{vm.membership.isUpdate?'Reemplazar': 'Selecciona'}}</span></div>
+            <span ng-show="vm.file">Imagen seleccionada:</span>
+            <img ngf-thumbnail="vm.file" ngf-size="{width: 80, height: 80}"/>
+            <div class="m-t-xs" ng-show="vm.isDirty() && membershipForm.file.$invalid">
+              <small class="text-danger" ng-show="membershipForm.file.$error.required">Seleccione imagen</small>
+            </div>
+          </div>
+          <div class="col-md-4" ng-show="vm.membership.isUpdate">
+            <span>Imagen actual:</span>
+            <img style="max-width:80px; max-height:80px;" ng-src="{{CONSTANTS.API_URI}}/membership/view-nocache-file?membershipId={{vm.membership.vm.selectedMembership.id}}&u={{vm.membership.vm.imgUpdateFlag}}"/>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Cub&iacute;culo(s) disponibles</label>
+        <label class="pull-right">Membres&iacute;a limitada a cub&iacute;culo(s)</label>
+        <dualmultiselect options="vm.demoOptions"> </dualmultiselect>
+      </div>
+
+
+        <br>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-white" ng-click="vm.cancel()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" type="submit" ng-disabled="!membershipForm.$valid"><strong>Guardar</strong>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

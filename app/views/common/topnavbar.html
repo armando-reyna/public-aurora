@@ -1,0 +1,54 @@
+<div class="row border-bottom">
+  <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <span minimaliza-sidebar></span>
+      <img src="img/logo.png" height="60">
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      <li>
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span ng-show="headerInfo.role.id == CONSTANTS.ROLES.CLIENT">{{headerInfo.name}} | {{headerInfo.user}}
+          | <span ng-show="headerInfo.hasMultipleMemberships">
+            <a ui-sref="index.profile">
+             <i class="fa fa-credit-card"></i>
+            <span class="nav-label ng-binding">M&uacute;ltiple</span>
+            <span class=""></span>
+          </a></span> <span ng-hide="headerInfo.hasMultipleMemberships">{{headerInfo.currentMembership.type.name}}</span>
+          |
+          <span ng-class="headerInfo.membershipHrs < 5 ? 'error' : ''" ng-hide="headerInfo.hasUnlimitedMembership">
+            {{headerInfo.membershipHrs}} hrs. restantes</span>
+          <span class="error" ng-show="headerInfo.hasUnlimitedMembership">
+            HORAS ILIMITADAS</span>
+          |
+        </span>
+        <span ng-hide="headerInfo.role.id == CONSTANTS.ROLES.CLIENT">{{headerInfo.name}} | {{headerInfo.user}} | {{headerInfo.role.name}} |</span>
+        <span ng-show="headerInfo.role.id == CONSTANTS.ROLES.BRANCH_ADMIN">{{headerInfo.branch.name}} |</span>
+      </li>
+      <li>
+        <b class="m-r-sm text-muted welcome-message">Sistema de Reservas</b>
+      </li>
+      <li uib-dropdown on-toggle="main.toggled(open)">
+        <a class="count-info" href uib-dropdown-toggle ng-click="main.resetNotifsCount()">
+          <i class="fa fa-bell"></i> <span class="label label-primary">{{ notifications | countUnreadNotifs}}</span>
+        </a>
+        <ul class="dropdown-alerts" uib-dropdown-menu>
+          <li ng-repeat-start="notification in notifications.slice().reverse()" ng-class="notification.unread ? 'unread' : 'read'">
+            <a href="">
+              <div ng-class="notification.foreground">
+                <i class="fa fa-envelope" ng-class="notification.icon"></i> {{notification.message}}
+              </div>
+            </a>
+          </li>
+          <li class="divider" ng-repeat-end ng-show="!$last"></li>
+        </ul>
+      </li>
+      <li>
+        <a ng-click="main.logout()">
+          <i class="fa fa-sign-out"></i> Salir
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+</div>

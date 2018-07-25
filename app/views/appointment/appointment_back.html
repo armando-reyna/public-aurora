@@ -1,0 +1,142 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-9">
+    <h2 class="link" ng-click="vm.clearSelectedView()">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      Cubículos
+    </h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="" ng-click="vm.clearSelectedView()">Cub&iacute;culos</a>
+      </li>
+      <li class="active">
+        <strong>{{vm.selectedCubicle.name}}</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox no-margins">
+      <div class="ibox-title">
+        <div class="row">
+          <div class="col-lg-12">
+            <h4 ng-hide="vm.cubicleType">Seleccione un tipo de consultorio:</h4>
+            <button class="btn btn-primary-b" name="showGalleryBtn" type="button"
+                    ng-click="vm.setCubicleType(CONSTANTS.CUBICLES.MEDICAL)"
+                    ng-show="vm.cubicleType != CONSTANTS.CUBICLES.MEDICAL">
+              <img src="img/medical.png" width="30">
+              Consultorios Médicos
+            </button>
+            <button class="btn btn-primary-b" name="showGalleryBtn" type="button"
+                    ng-click="vm.setCubicleType(CONSTANTS.CUBICLES.DENTAL)"
+                    ng-show="vm.cubicleType != CONSTANTS.CUBICLES.DENTAL">
+              <img src="img/dental.png" width="30">
+              Consultorios Dentales
+            </button>
+            <button class="btn btn-primary" name="showGalleryBtn" type="button"
+                    ng-click="vm.showGalleryView()"
+                    ng-show="vm.cubicleType"
+                    ng-disabled="!vm.selectedCubicle">Ver Galer&iacute;a
+            </button>
+            <button class="btn btn-primary" name="showCalendarBtn" type="button"
+                    ng-click="vm.showApptView()"
+                    ng-show="vm.cubicleType"
+                    ng-disabled="!vm.selectedCubicle">Agendar Cita
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-show="vm.isSelectCubicle">
+  <div class="col-lg-10 col-lg-offset-1">
+    <div class="deckgrid clearfix ng-scope ng-isolate-scope" deckgrid="" source="vm.cubicles"
+         cardtemplate="views/common/deckgrid-card.html"></div>
+  </div>
+</div>
+
+<div ng-show="vm.isGalleryView">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Galer&iacute;a</h5>
+          <div ibox-tools></div>
+        </div>
+        <div class="file-box" ng-show="vm.files.length == 0">
+          <div class="file-box">
+
+            <div class="file">
+              <span class="corner"></span>
+              <div class="icon">
+                <i class="fa fa-folder-open-o"></i>
+              </div>
+              <div class="file-name">
+                No hay im&aacute;genes.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="file-box" ng-repeat="file in vm.files track by $index" ng-hide="vm.files.length == 0">
+          <div class="file">
+            <a ng-click="vm.carouselModal(vm.files, $index)">
+              <span class="corner"></span>
+              <div class="image">
+                <img alt="image" class="img-responsive"
+                     ng-src="{{CONSTANTS.API_URI + 'cubicle/view-file?' + file.url}}">
+              </div>
+              <div class="file-name">
+
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="calendarWrapper" class="wrapper wrapper-content">
+
+  <h3>Para agendar una cita, haga clic en el día deseado.</h3>
+
+  <div class="btn-bar">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="btn-group">
+          <span class="btn btn-white" ng-model="vm.calendarView" uib-btn-radio="'Week'"
+                ng-click="changeView('agendaWeek', 'myCalendar')">
+            <i class="fa fa-list" aria-hidden="true"></i> Agenda Semanal
+          </span>
+          <span class="btn btn-white" ng-model="vm.calendarView" uib-btn-radio="'Month'"
+                ng-click="changeView('month', 'myCalendar')">
+            <i class="fa fa-calendar" aria-hidden="true"></i> Agenda Mensual
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ibox-content">
+    <div data-tap-disabled="true" ui-calendar="uiConfig.calendar" class="span8 calendar"
+         ng-model="eventSources" calendar="myCalendar" id="myCalendar"></div>
+  </div>
+
+</div>
+
+<div class="busy" ng-show="vm.loading">
+  <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-wave">
+      Cargando...
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+  </div>
+</div>

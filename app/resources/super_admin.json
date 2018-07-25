@@ -1,0 +1,172 @@
+[
+  {
+    "name": "Inicio",
+    "ngClass": "",
+    "uiSref": "index.main",
+    "iClass": "fa fa-home",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Usuarios",
+    "ngClass": "",
+    "uiSref": "index.user",
+    "iClass": "fa fa-users",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Lead Management",
+    "ngClass": "",
+    "uiSref": "index",
+    "iClass": "fa fa-star",
+    "faArrow": "fa arrow",
+    "hasSubitems": true,
+    "subitems": [
+      {
+        "nameChild": "Edición de Leads",
+        "ngClass": "",
+        "uiSref": "index.leads",
+        "actions": "Parameter"
+      },
+      {
+        "nameChild": "Seguimiento de Leads",
+        "ngClass": "",
+        "uiSref": "index.leads-follow-up",
+        "actions": "Create"
+      },
+      {
+        "nameChild": "Clientes",
+        "ngClass": "",
+        "uiSref": "index.leads-clients",
+        "actions": "Create"
+      },
+      {
+        "nameChild": "Administrar Status",
+        "ngClass": "",
+        "uiSref": "index.status",
+        "actions": "Create"
+      }
+    ]
+  },
+  {
+    "name": "Sucursales",
+    "ngClass": "",
+    "uiSref": "index.branches",
+    "iClass": "fa fa-building-o",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Cubículos",
+    "ngClass": "",
+    "uiSref": "index.cubicles",
+    "iClass": "fa fa-map-marker",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Membresías",
+    "ngClass": "",
+    "uiSref": "index.admin-memberships",
+    "iClass": "fa fa-users",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Agenda",
+    "ngClass": "",
+    "uiSref": "index.main",
+    "iClass": "fa fa-calendar",
+    "faArrow": "fa arrow",
+    "hasSubitems": true,
+    "subitems": [
+      {
+        "nameChild": "Calendario",
+        "ngClass": "",
+        "uiSref": "index.doctors-appt",
+        "actions": "Parameter"
+      }
+    ]
+  },
+  {
+    "name": "Finanzas/Historial",
+    "ngClass": "",
+    "uiSref": "index.doctors-admin-finances",
+    "iClass": "fa fa-money",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Facturas",
+    "ngClass": "",
+    "uiSref": "index.leads-bills",
+    "iClass": "fa fa-file",
+    "uiSrefSctive": "active",
+    "faArrow": "",
+    "hasSubitems": false,
+    "subitems": []
+  },
+  {
+    "name": "Reportes",
+    "ngClass": "",
+    "uiSref": "index",
+    "iClass": "fa fa-files-o",
+    "faArrow": "fa arrow",
+    "hasSubitems": true,
+    "subitems": [
+      {
+        "nameChild": "Clientes",
+        "ngClass": "",
+        "uiSref": "index.userReport",
+        "actions": "Parameter"
+      },
+      {
+        "nameChild": "Leads",
+        "ngClass": "",
+        "uiSref": "index.leadReport",
+        "actions": "Create"
+      },
+      {
+        "nameChild": "Cobranza",
+        "ngClass": "",
+        "uiSref": "index.collectionReport",
+        "actions": "Create"
+      },
+      {
+        "nameChild": "Citas",
+        "ngClass": "",
+        "uiSref": "index.appointmentReport",
+        "actions": "Create"
+      }
+    ]
+  },
+  {
+    "name": "Tutoriales",
+    "ngClass": "",
+    "uiSref": "index",
+    "iClass": "fa fa-video-camera",
+    "faArrow": "fa arrow",
+    "hasSubitems": true,
+    "subitems": [
+      {
+        "nameChild": "Agendar Cita",
+        "ngClass": "",
+        "uiSref": "index.tutorial_01",
+        "actions": "Parameter"
+      }
+    ]
+  }
+]
